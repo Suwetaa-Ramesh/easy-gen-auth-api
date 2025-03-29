@@ -60,12 +60,6 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('protected')
-  async getUserDetails(@Body() user) {
-    return { message: 'Protected route', user };
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Post('logout')
   @ApiOperation({ summary: 'Logout the current user' })
   @ApiResponse({

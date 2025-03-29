@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { JwtStrategy } from './auth/jwt.stratergy';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      `mongodb+srv://suwetaaramesh:V05m8YoyebiVnQUt@cluster0.txwfmnb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
-    ),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGODB_DB_URI!),
     AuthModule,
     UsersModule,
-  ]
+  ],
+  providers: [JwtStrategy],
 })
 export class AppModule {}
 
-// email : firstUser@gmail.com
-// password: "1stuser!"
