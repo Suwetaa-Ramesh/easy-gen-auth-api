@@ -21,24 +21,28 @@ Run the following command to install the necessary dependencies:
 npm install
 ```
 
-### Step 3: Configure MongoDB URI 
-Before running the application, you need to connect it to a MongoDB database. 
+### Step 3: Configure MongoDB URI  
 
-A. **Using MongoDB Atlas (Cloud Database)**
+Before running the application, you need to connect it to a MongoDB database. You can either use **MongoDB Atlas (Cloud)** or **Local MongoDB**.
 
- ***Create a MongoDB Atlas account***:  
-   Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), create a new cluster, and generate a **database user** and **connection URI**.
+#### A. Using MongoDB Atlas (Cloud Database)
+1. **Create a MongoDB Atlas account**  
+   - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).  
+   - Create a **new cluster**.  
+   - Generate a **database user** and a **connection URI**.  
 
- ***Copy the MongoDB URI***:  
-   After setting up, copy the connection string from Atlas (it will look like this):
+2. **Copy the MongoDB URI**  
+   - Once the cluster is set up, go to **Connect** → **Choose "Connect your application"**.  
+   - Copy the provided connection string, which looks like this:
 
    ```bash
    mongodb+srv://<username>:<password>@cluster0.mongodb.net/myDatabase
    ```
 
-B. **Using Local MongoDB (Local Instance)**
+#### B. Using Local MongoDB (Local Instance)
+1. **Use Local MongoDB URI**  
+   - Start MongoDB and get your connection string 
 
-   Configure and get MongoDB Connection URI for Local Use:
 
 ### Step 4: Configure environment variables
 
