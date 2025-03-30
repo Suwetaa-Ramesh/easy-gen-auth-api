@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { EmailNotFoundException } from './exceptions/email-not-found.exception';
 import { InvalidCredentialsException } from './exceptions/invalid-credentials.exception';
+import { EmailExistsException } from './exceptions/email-exists-exception';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +14,15 @@ export class AuthService {
   ) {}
 
   async signUp(email: string, name: string, password: string) {
-    const user = await this.usersService.createUser(email, name, password);
-    return this.generateJwt(user);
+    try{
+      const user = await this.usersService.createUser(email, name, password);
+      return this.generateJwt(user);
+    }catch(error:any) {
+      if (error.code === 11000) { 
+        throw new EmailExistsException();
+      }
+      throw new InternalServerErrorException('Something went wrong. Please try again.');
+    }
   }
 
   async signIn(email: string, password: string) {

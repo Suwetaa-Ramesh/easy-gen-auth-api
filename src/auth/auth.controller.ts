@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, UseFilters } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -30,6 +30,7 @@ export class AuthController {
     status: 400,
     description: 'Bad request, possibly due to validation error.',
   })
+  @ApiResponse({ status: 409, description: 'Email is already in use.' })
   async signUp(@Body() body) {
     return this.authService.signUp(body.email, body.name, body.password);
   }

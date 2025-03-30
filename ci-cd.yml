@@ -1,0 +1,44 @@
+name: Auth Api
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3 
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22.14.0' 
+
+    - name: Install dependencies
+      run: npm install  
+
+    - name: Build the app
+      run: npm run build  
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: dist 
+
+    - name: Deploy to Heroku
+      if: github.ref == 'refs/heads/main' 
+      run: |
+        git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+        git push heroku main  # Push to Heroku for deployment
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+
